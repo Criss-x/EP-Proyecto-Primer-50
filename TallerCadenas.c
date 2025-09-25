@@ -104,14 +104,13 @@ int Palindromo(char palabra[]) {
 }
 
 int main(){
-    /*
+
     char nombrePropio[100];
     printf("Ingrese un texto: ");
     fgets(nombrePropio, sizeof(nombrePropio), stdin);
     nombrePropio[strcspn(nombrePropio, "\n")] = 0; //No guarda el salto de linea
     printf("Reescrito como nombre propio: ");
     NombrePropio(nombrePropio);
-    */
 
     char caracter;
     char cadCaracteres[100];
