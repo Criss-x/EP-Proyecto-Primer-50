@@ -3,7 +3,6 @@
 #include <ctype.h>
 
 void NombrePropio(char *nombrePropio) {
-    printf("%i\n", strlen(nombrePropio));
     if (strlen(nombrePropio) > 2) {
         nombrePropio[0] = toupper(nombrePropio[0]);
     }
@@ -15,10 +14,10 @@ void NombrePropio(char *nombrePropio) {
     }
 }
 
-void contarCaracteres(char *nombrePropio, char caracter) {
+void contarCaracteres(char *cadCaracteres, char caracter) {
     int contador = 0;
-    for (int i = 0; i < strlen(nombrePropio); i++) {
-        if ( tolower(nombrePropio[i]) == caracter ) {
+    for (int i = 0; i < strlen(cadCaracteres); i++) {
+        if ( tolower(cadCaracteres[i]) == caracter ) {
             contador++;
             }
     }
@@ -45,17 +44,36 @@ int contarPalabras(char *texto, char *palabra) {
     return contador;
 }
 
+int Palindromo(char palabra[]) {
+    int i = 0;
+    int j = strlen(palabra) - 1;
+
+    while (i < j) {
+        if (tolower(palabra[i]) != tolower(palabra[j])) {
+            return 0;
+        }
+        i++;
+        j--;
+    }
+    return 1;
+}
+
 int main(){
     char nombrePropio[100];
-    printf("Ingrese su nombre: ");
+    printf("Ingrese un texto: ");
     fgets(nombrePropio, sizeof(nombrePropio), stdin);
     nombrePropio[strcspn(nombrePropio, "\n")] = 0; //No guarda el salto de linea
+    printf("Reescrito como nombre propio: ");
     NombrePropio(nombrePropio);
 
     char caracter;
-    printf("\nIngresa el caracter que deseas encontrar: ");
+    char cadCaracteres[100];
+    printf("\nIngresa un texto: ");
+    fgets(cadCaracteres, sizeof(cadCaracteres), stdin);
+    cadCaracteres[strcspn(cadCaracteres, "\n")] = 0;
+    printf("Ingresa el caracter que deseas encontrar: ");
     scanf("%c", &caracter);
-    contarCaracteres(nombrePropio, caracter);
+    contarCaracteres(cadCaracteres, caracter);
 
     getchar();
     char texto[200];
@@ -72,5 +90,16 @@ int main(){
     int nVeces = contarPalabras(texto, palabra);
     printf("La palabra '%s' aparece %d veces en el texto.\n", palabra, nVeces );
 
+
+    char palabra_palindromo[100];
+
+    printf("Ingrese una palabra: ");
+    scanf("%s", palabra_palindromo);
+
+    if (Palindromo(palabra_palindromo)) {
+        printf("La palabra '%s' es palindromo\n", palabra_palindromo);
+    } else {
+        printf("La palabra '%s' no es palindromo\n", palabra_palindromo);
+    }
     return 0;
 }
