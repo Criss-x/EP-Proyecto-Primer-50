@@ -72,4 +72,5 @@ int main(){
     int nVeces = contarPalabras(texto, palabra);
     printf("La palabra '%s' aparece %d veces en el texto.\n", palabra, nVeces );
 
+    return 0;
 }
