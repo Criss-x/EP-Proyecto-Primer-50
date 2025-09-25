@@ -1,6 +1,26 @@
 #include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+
+;
+
+void NombrePropio(char *nombrePropio) {
+    // strlen() > 2 ya que la cadena almacena un un valor de mas que corresponde al salto de linea
+    if (strlen(nombrePropio) > 2) {
+        nombrePropio[0] = toupper(nombrePropio[0]);
+    }
+    for (int i = 0; i < strlen(nombrePropio); i++) {
+        if (nombrePropio[i] == ' ' ) {
+            nombrePropio[(i+1)] = toupper(nombrePropio[(i+1)]);
+        }
+        printf("%c ", nombrePropio[i]);
+    }
+}
 
 int main(){
-    printf("Hola mundo");
-return 0;
+    char nombrePropio[100];
+    printf("Ingrese su nombre");
+    fgets(nombrePropio, sizeof(nombrePropio), stdin);
+    NombrePropio(nombrePropio);
+    return 0;
 }
