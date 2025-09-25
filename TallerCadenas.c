@@ -3,7 +3,7 @@
 #include <ctype.h>
 
 void NombrePropio(char *nombrePropio) {
-    // strlen() > 2 ya que la cadena almacena un un valor de mas que corresponde al salto de linea
+    printf("%i\n", strlen(nombrePropio));
     if (strlen(nombrePropio) > 2) {
         nombrePropio[0] = toupper(nombrePropio[0]);
     }
@@ -49,6 +49,7 @@ int main(){
     char nombrePropio[100];
     printf("Ingrese su nombre: ");
     fgets(nombrePropio, sizeof(nombrePropio), stdin);
+    nombrePropio[strcspn(nombrePropio, "\n")] = 0; //No guarda el salto de linea
     NombrePropio(nombrePropio);
 
     char caracter;
@@ -59,12 +60,12 @@ int main(){
     getchar();
     char texto[200];
     char palabra[50];
-    printf("\nIngrese un texto: ");
+    printf("\nIngrese un texto: \n");
     fgets(texto, sizeof(texto), stdin);
     texto[strcspn(texto, "\n")] = 0;
 
     getchar();
-    printf("\nIngrese la palabra que desea buscar: ");
+    printf("\nIngrese la palabra que desea buscar: \n");
     fgets(palabra, sizeof(palabra), stdin);
     palabra[strcspn(palabra, "\n")] = 0;
 
