@@ -1,16 +1,17 @@
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>
+#include <stdlib.h>
 
 void NombrePropio(char *nombrePropio) {
-    if (strlen(nombrePropio) > 2) {
+    if (strlen(nombrePropio) > 1) {
         nombrePropio[0] = toupper(nombrePropio[0]);
     }
     for (int i = 0; i < strlen(nombrePropio); i++) {
         if (nombrePropio[i] == ' ' ) {
             nombrePropio[(i+1)] = toupper(nombrePropio[(i+1)]);
         }
-        printf("%c ", nombrePropio[i]);
+        printf("%c", nombrePropio[i]);
     }
 }
 
@@ -44,6 +45,50 @@ int contarPalabras(char *texto, char *palabra) {
     return contador;
 }
 
+char *convertirBase(char *numeroDecimal, int base) {
+    static char resultado[100];
+    int num = 0;
+
+    //Verificamos que todos los valores ingresados son numeros usando !isdigit
+    for (int i = 0; i < strlen(numeroDecimal); i++) {
+        if (!isdigit(numeroDecimal[i])) {
+            return NULL;
+        }
+    }
+
+    // Atoi convierte la cadena de caracteres a un  numero entero
+    num = atoi(numeroDecimal);
+
+    //Verifica que se haya escogido una base valida
+    if (base < 2 || base > 16) {
+        return NULL;
+    }
+
+    //Caracteres validos para representar en bases 2...16
+    char digitos[] = "0123456789ABCDEF";
+    int i = 0;
+
+    if (num == 0) {
+        strcpy(resultado, "0");
+        return resultado;
+    }
+
+    while (num > 0) {
+        resultado[i++] = digitos[num % base];
+        num /= base;
+    }
+    resultado[i] = '\0';
+
+    // Invierte el resultado
+    for (int j = 0; j < i / 2; j++) {
+        char temp = resultado[j];
+        resultado[j] = resultado[i - j - 1];
+        resultado[i - j - 1] = temp;
+    }
+
+    return resultado;
+}
+
 int Palindromo(char palabra[]) {
     int i = 0;
     int j = strlen(palabra) - 1;
@@ -59,19 +104,21 @@ int Palindromo(char palabra[]) {
 }
 
 int main(){
+    /*
     char nombrePropio[100];
     printf("Ingrese un texto: ");
     fgets(nombrePropio, sizeof(nombrePropio), stdin);
     nombrePropio[strcspn(nombrePropio, "\n")] = 0; //No guarda el salto de linea
     printf("Reescrito como nombre propio: ");
     NombrePropio(nombrePropio);
+    */
 
     char caracter;
     char cadCaracteres[100];
     printf("\nIngresa un texto: ");
     fgets(cadCaracteres, sizeof(cadCaracteres), stdin);
     cadCaracteres[strcspn(cadCaracteres, "\n")] = 0;
-    printf("Ingresa el caracter que deseas encontrar: ");
+    printf("Ingresa el caracter que deseas encontrar: \n");
     scanf("%c", &caracter);
     contarCaracteres(cadCaracteres, caracter);
 
@@ -82,13 +129,22 @@ int main(){
     fgets(texto, sizeof(texto), stdin);
     texto[strcspn(texto, "\n")] = 0;
 
-    getchar();
-    printf("\nIngrese la palabra que desea buscar: \n");
+    printf("Ingrese la palabra que desea buscar: \n");
     fgets(palabra, sizeof(palabra), stdin);
     palabra[strcspn(palabra, "\n")] = 0;
 
     int nVeces = contarPalabras(texto, palabra);
     printf("La palabra '%s' aparece %d veces en el texto.\n", palabra, nVeces );
+
+    char numeroDecimal[100];
+    int base;
+    printf("Ingresa un numero decimal: \n");
+    scanf("%s", &numeroDecimal);
+    printf("Ingresa la base a la cual convertir ( 2...16 ): ");
+    scanf("%d", &base);
+    convertirBase(numeroDecimal, base);
+    printf("El numero %s en base %i es: %s\n", numeroDecimal, base, convertirBase(numeroDecimal, base));
+
 
 
     char palabra_palindromo[100];
