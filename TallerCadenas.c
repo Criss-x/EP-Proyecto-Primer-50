@@ -2,8 +2,6 @@
 #include <string.h>
 #include <ctype.h>
 
-;
-
 void NombrePropio(char *nombrePropio) {
     // strlen() > 2 ya que la cadena almacena un un valor de mas que corresponde al salto de linea
     if (strlen(nombrePropio) > 2) {
@@ -17,10 +15,24 @@ void NombrePropio(char *nombrePropio) {
     }
 }
 
+void contarCaracteres(char *nombrePropio, char caracter) {
+    int contador = 0;
+    for (int i = 0; i < strlen(nombrePropio); i++) {
+        if ( tolower(nombrePropio[i]) == caracter ) {
+            contador++;
+            }
+    }
+    printf("El caracter %c se encuentra %i veces en la cadena de texto", caracter, contador);
+}
+
 int main(){
     char nombrePropio[100];
-    printf("Ingrese su nombre");
+    printf("Ingrese su nombre: ");
     fgets(nombrePropio, sizeof(nombrePropio), stdin);
     NombrePropio(nombrePropio);
-    return 0;
+    char caracter;
+    printf("\nIngresa el caracter que deseas encontrar: ");
+    scanf("%c", &caracter);
+    contarCaracteres(nombrePropio, caracter);
+    
 }
