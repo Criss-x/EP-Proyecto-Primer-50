@@ -194,8 +194,11 @@ int main(){
     } else {
         printf("La palabra '%s' no es palindromo\n", palabra_palindromo);
     }
+
     //SUBSTRING
-    int inicio, fin, opcion;
+    int inicio;
+    int fin;
+    int opcion;
     char cadenaDeTexto[100];
     //char cadenaDeTexto[] = "Sogamoso ciudad del Sol y del Acero"; //EJEMPLO
     printf("1. Obtener subcadena desde un indice\n");
