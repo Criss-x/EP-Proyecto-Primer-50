@@ -103,6 +103,44 @@ int Palindromo(char palabra[]) {
     return 1;
 }
 
+//SUBSTRING
+typedef char* (*subCadena)(char[], int);
+typedef char* (*SubCadena)(char[], int, int);
+
+char* subCadenaInicio(char texto[], int inicio) {
+    static char resultado[200];
+    int longitud = strlen(texto);
+
+    if (inicio < 0) {
+        inicio = 0;
+    }
+    if (inicio >= longitud) {
+        return "";
+    }
+    strcpy(resultado, texto + inicio);
+    return resultado;
+}
+char* subCadenaFin(char texto[], int inicio, int fin) {
+    static char resultado[200];
+    int longitud = strlen(texto);
+
+    if (inicio < 0) inicio = 0;
+    if (fin > longitud) fin = longitud;
+
+    int i = 0;
+    if (inicio <= fin) {
+        for (int j = inicio; j < fin && j < longitud; j++) {
+            resultado[i++] = texto[j];
+        }
+    } else {
+        for (int j = inicio; j > fin && j >= 0; j--) {
+            resultado[i++] = texto[j];
+        }
+    }
+    resultado[i] = '\0';
+    return resultado;
+}
+
 int main(){
 
     char nombrePropio[100];
@@ -156,5 +194,37 @@ int main(){
     } else {
         printf("La palabra '%s' no es palindromo\n", palabra_palindromo);
     }
+    //SUBSTRING
+    int inicio, fin, opcion;
+    char cadenaDeTexto[100];
+    //char cadenaDeTexto[] = "Sogamoso ciudad del Sol y del Acero"; //EJEMPLO
+    printf("1. Obtener subcadena desde un indice\n");
+    printf("2. Obtener subcadena entre inicio y fin\n");
+    printf("Elige una opcion: ");
+    scanf("%d", &opcion);
+    getchar();
+
+    if (opcion == 1) {
+        printf("Ingrese una cadena de texto: ");
+        fgets(cadenaDeTexto, sizeof(cadenaDeTexto), stdin);
+        cadenaDeTexto[strcspn(cadenaDeTexto, "\n")] = 0;
+        printf("Ingrese el indice de inicio: ");
+        scanf("%d", &inicio);
+        printf("\nResultado: %s\n", subCadenaInicio(cadenaDeTexto, inicio));
+    }
+    else if (opcion == 2) {
+        printf("Ingrese una cadena de texto: ");
+        fgets(cadenaDeTexto, sizeof(cadenaDeTexto), stdin);
+        cadenaDeTexto[strcspn(cadenaDeTexto, "\n")] = 0;
+        printf("Ingrese el indice de inicio: ");
+        scanf("%d", &inicio);
+        printf("Ingrese el indice de fin: ");
+        scanf("%d", &fin);
+        printf("Resultado: %s\n", subCadenaFin(cadenaDeTexto, inicio, fin));
+    }
+    else {
+        printf("Opcion no valida.\n");
+    }
+
     return 0;
 }
