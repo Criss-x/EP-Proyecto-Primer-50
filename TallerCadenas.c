@@ -3,6 +3,7 @@
 #include <ctype.h>
 #include <stdlib.h>
 
+//Nombre Propio
 void NombrePropio(char *nombrePropio) {
     if (strlen(nombrePropio) > 1) {
         nombrePropio[0] = toupper(nombrePropio[0]);
@@ -15,6 +16,7 @@ void NombrePropio(char *nombrePropio) {
     }
 }
 
+//Contar caracteres
 void contarCaracteres(char *cadCaracteres, char caracter) {
     int contador = 0;
     for (int i = 0; i < strlen(cadCaracteres); i++) {
@@ -25,6 +27,7 @@ void contarCaracteres(char *cadCaracteres, char caracter) {
     printf("El caracter %c se encuentra %i veces en la cadena de texto", caracter, contador);
 }
 
+//Contar palabras
 int contarPalabras(char *texto, char *palabra) {
     int contador = 0;
     char textoAlmacenado[100];
@@ -45,6 +48,45 @@ int contarPalabras(char *texto, char *palabra) {
     return contador;
 }
 
+//SUBSTRING
+typedef char* (*subCadena)(char[], int);
+typedef char* (*SubCadena)(char[], int, int);
+
+char* subCadenaInicio(char texto[], int inicio) {
+    static char resultado[200];
+    int longitud = strlen(texto);
+
+    if (inicio < 0) {
+        inicio = 0;
+    }
+    if (inicio >= longitud) {
+        return "";
+    }
+    strcpy(resultado, texto + inicio);
+    return resultado;
+}
+char* subCadenaFin(char texto[], int inicio, int fin) {
+    static char resultado[200];
+    int longitud = strlen(texto);
+
+    if (inicio < 0) inicio = 0;
+    if (fin > longitud) fin = longitud;
+
+    int i = 0;
+    if (inicio <= fin) {
+        for (int j = inicio; j < fin && j < longitud; j++) {
+            resultado[i++] = texto[j];
+        }
+    } else {
+        for (int j = inicio; j > fin && j >= 0; j--) {
+            resultado[i++] = texto[j];
+        }
+    }
+    resultado[i] = '\0';
+    return resultado;
+}
+
+//Bases Numéricas
 char *convertirBase(char *numeroDecimal, int base) {
     static char resultado[100];
     int num = 0;
@@ -89,6 +131,7 @@ char *convertirBase(char *numeroDecimal, int base) {
     return resultado;
 }
 
+//Palindromo
 int Palindromo(char palabra[]) {
     int i = 0;
     int j = strlen(palabra) - 1;
@@ -103,46 +146,9 @@ int Palindromo(char palabra[]) {
     return 1;
 }
 
-//SUBSTRING
-typedef char* (*subCadena)(char[], int);
-typedef char* (*SubCadena)(char[], int, int);
-
-char* subCadenaInicio(char texto[], int inicio) {
-    static char resultado[200];
-    int longitud = strlen(texto);
-
-    if (inicio < 0) {
-        inicio = 0;
-    }
-    if (inicio >= longitud) {
-        return "";
-    }
-    strcpy(resultado, texto + inicio);
-    return resultado;
-}
-char* subCadenaFin(char texto[], int inicio, int fin) {
-    static char resultado[200];
-    int longitud = strlen(texto);
-
-    if (inicio < 0) inicio = 0;
-    if (fin > longitud) fin = longitud;
-
-    int i = 0;
-    if (inicio <= fin) {
-        for (int j = inicio; j < fin && j < longitud; j++) {
-            resultado[i++] = texto[j];
-        }
-    } else {
-        for (int j = inicio; j > fin && j >= 0; j--) {
-            resultado[i++] = texto[j];
-        }
-    }
-    resultado[i] = '\0';
-    return resultado;
-}
-
 int main(){
 
+    //Nombre Propio
     char nombrePropio[100];
     printf("Ingrese un texto: ");
     fgets(nombrePropio, sizeof(nombrePropio), stdin);
@@ -150,6 +156,7 @@ int main(){
     printf("Reescrito como nombre propio: ");
     NombrePropio(nombrePropio);
 
+    //Contar caracteres
     char caracter;
     char cadCaracteres[100];
     printf("\nIngresa un texto: ");
@@ -159,6 +166,7 @@ int main(){
     scanf("%c", &caracter);
     contarCaracteres(cadCaracteres, caracter);
 
+    //Contar palabras
     getchar();
     char texto[200];
     char palabra[50];
@@ -173,27 +181,6 @@ int main(){
     int nVeces = contarPalabras(texto, palabra);
     printf("La palabra '%s' aparece %d veces en el texto.\n", palabra, nVeces );
 
-    char numeroDecimal[100];
-    int base;
-    printf("Ingresa un numero decimal: \n");
-    scanf("%s", &numeroDecimal);
-    printf("Ingresa la base a la cual convertir ( 2...16 ): ");
-    scanf("%d", &base);
-    convertirBase(numeroDecimal, base);
-    printf("El numero %s en base %i es: %s\n", numeroDecimal, base, convertirBase(numeroDecimal, base));
-
-
-
-    char palabra_palindromo[100];
-
-    printf("Ingrese una palabra: ");
-    scanf("%s", palabra_palindromo);
-
-    if (Palindromo(palabra_palindromo)) {
-        printf("La palabra '%s' es palindromo\n", palabra_palindromo);
-    } else {
-        printf("La palabra '%s' no es palindromo\n", palabra_palindromo);
-    }
 
     //SUBSTRING
     int inicio;
@@ -229,5 +216,27 @@ int main(){
         printf("Opcion no valida.\n");
     }
 
+
+    //Bases Numéricas
+    char numeroDecimal[100];
+    int base;
+    printf("Ingresa un numero decimal: \n");
+    scanf("%s", &numeroDecimal);
+    printf("Ingresa la base a la cual convertir ( 2...16 ): ");
+    scanf("%d", &base);
+    convertirBase(numeroDecimal, base);
+    printf("El numero %s en base %i es: %s\n", numeroDecimal, base, convertirBase(numeroDecimal, base));
+
+    //Palindromo
+    char palabra_palindromo[100];
+
+    printf("Ingrese una palabra: ");
+    scanf("%s", palabra_palindromo);
+
+    if (Palindromo(palabra_palindromo)) {
+        printf("La palabra '%s' es palindromo\n", palabra_palindromo);
+    } else {
+        printf("La palabra '%s' no es palindromo\n", palabra_palindromo);
+    }
     return 0;
 }
