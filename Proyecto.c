@@ -2,7 +2,7 @@
 #include <math.h>
 #include <string.h>
 
-#define MAX_DATOS 7 //Mayor a 7 se desborda el texto en la consola
+#define MAX_DATOS 7 // Mayor a 7 se desborda el texto en la consola
 #define NUM_PREFIJOS 9
 #define ANCHO_GRAFICA 100
 #define ALTO_GRAFICA 20
