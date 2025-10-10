@@ -11,6 +11,8 @@
 char *prefijos[NUM_PREFIJOS] = {"Pico", "Nano", "Micro", "Mili", "Unidad", "Kilo", "Mega", "Giga", "Tera"};
 double multiplicadores[NUM_PREFIJOS] = {1e-12, 1e-9, 1e-6, 1e-3, 1, 1e3, 1e6, 1e9, 1e12};
 
+// ---------------------- FUNCIONES PARA CONVERSION DE UNIDADES ----------------------
+
 // Menu de conversion unidades
 void mostrarMenuConversion() {
     printf("\n --- MENU DE CONVERSION DE UNIDADES --- \n");
