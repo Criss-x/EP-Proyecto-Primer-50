@@ -2,7 +2,7 @@
 #include <math.h>
 #include <string.h>
 
-#define MAX_DATOS 7 // Mayor a 7 se desborda el texto en la consola
+#define MAX_DATOS 4 // Mayor a 7 se desborda el texto en la consola
 #define NUM_PREFIJOS 9
 #define ANCHO_GRAFICA 100
 #define ALTO_GRAFICA 20
@@ -37,7 +37,7 @@ void mostrarValoresIngresados(double valores[], int prefijosDatos[], int cantida
     printf("\n --- TABLA DE VALORES INGRESADOS ---\n");
     printf("%-10s%-15s%-15s\n", "Indice", "Prefijo", "Valor");
     for (int i = 0; i < cantidad; i++) {
-        printf("%-10d%-10s%10.3lf\n", i + 1, prefijos[prefijosDatos[i]], valores[i]);
+        printf("%-10d%-10s%10.5lf\n", i + 1, prefijos[prefijosDatos[i]], valores[i]);
     }
 }
 
@@ -50,16 +50,26 @@ void mostrarTablaConversiones(double valores[], int prefijosDatos[], int cantida
     printf("\n --- TABLA DE CONVERSIONES ---\n");
     printf("%-10s", "Prefijo    ");
     for (int i = 0; i < cantidad; i++) {
-        printf("Dato #%d       ", i + 1);
+        printf("%15s%d\t", "Dato #",  i + 1);
     }
     printf("\n");
 
     for (int i = 0; i < NUM_PREFIJOS; i++) {
         printf("%-10s", prefijos[i]);
         for (int j = 0; j < cantidad; j++) {
-            double base = valores[j] * multiplicadores[prefijosDatos[j]];
+            double base =  multiplicadores[prefijosDatos[j]];
             double numConvertido = base / multiplicadores[i];
-            printf("%10.3e\t", numConvertido);
+            //printf("base: %lf\n", base);
+            //printf("Num convertido: %lf\n", numConvertido);
+            char expo[32];
+            sprintf(expo, "%15.5e", numConvertido); //Guarda un numero como un string
+            char *exponente = strchr(expo, 'e');
+            printf("%12.5f", valores[j]);
+            if (exponente != NULL)
+                printf("%s\t", exponente);  // imprime solo "e-03"
+            else
+                printf("");
+
         }
         printf("\n");
     }
@@ -263,9 +273,45 @@ int main() {
                                 double valor;
                                 printf("Ingrese el valor: ");
                                 scanf("%lf", &valor);
-
                                 valores[i] = valor;
                                 prefijosDatos[i] = indicePrefijo - 1;
+
+                                do {
+                                    if ( valores[i] >= 1000 && prefijosDatos[i] >= 8 ) {
+                                        printf("*_* Superaste el limite superior de valores *_*\nIngresa un valor un poco menos grande\n\n");
+                                        printf("Ingrese el valor: ");
+                                        scanf("%lf", &valor);
+                                        valores[i] = valor;
+                                        prefijosDatos[i] = indicePrefijo - 1;
+                                    }
+                                } while (valores[i] >= 1000 && prefijosDatos[i] >= 8);
+
+                                do {
+                                    if ( valores[i] < 1 && prefijosDatos[i] <= 0 ) {
+                                        printf("*_* Superaste el limite inferior de valores *_*\nIngresa un valor un poco mas grande\n\n");
+                                        printf("Ingrese el valor: ");
+                                        scanf("%lf", &valor);
+                                        valores[i] = valor;
+                                        prefijosDatos[i] = indicePrefijo - 1;
+                                    }
+                                } while ( valores[i] < 1 && prefijosDatos[i] <= 0 );
+
+                                do {
+                                    if ( valores[i] < 1) {
+                                        indicePrefijo--;
+                                        valores[i] = valores[i] * 1000;
+                                        prefijosDatos[i] = indicePrefijo-1;
+                                    }
+
+                                } while (valores[i] < 1);
+                                do {
+                                    if ( valores[i] >= 1000) {
+                                        valores[i] = valores[i] / 1000;
+                                        prefijosDatos[i] = indicePrefijo;
+                                    }
+                                    indicePrefijo++;
+                                } while (valores[i] >= 1000);
+
                             }
                             printf("\nValores ingresados correctamente.\n");
                             break;
