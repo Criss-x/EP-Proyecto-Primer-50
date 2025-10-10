@@ -64,14 +64,13 @@ void mostrarTablaConversiones(double valores[], int prefijosDatos[], int cantida
             //printf("base: %lf\n", base);
             //printf("Num convertido: %lf\n", numConvertido);
             char expo[32];
-            sprintf(expo, "%15.5e", numConvertido); //Guarda un numero como un string
+            sprintf(expo, "%15.5e", numConvertido); //Guarda el numero como un string con 5 decimales y en notacion cientifica
             char *exponente = strchr(expo, 'e');
             printf("%12.5f", valores[j]);
             if (exponente != NULL)
                 printf("%s\t", exponente);  // imprime solo "e-03"
             else
                 printf("");
-
         }
         printf("\n");
     }
@@ -135,7 +134,7 @@ void graficarOndaTriangular(double frecuencia) {
     printf("\n--- Onda Triangular ---\n");
     for (int j = ALTO_GRAFICA / 2; j >= -ALTO_GRAFICA / 2; j--) {
         for (int i = 0; i < ANCHO_GRAFICA; i++) {
-            double posicionActual = fmod(frecuencia * i / ANCHO_GRAFICA, 1.0);
+            double posicionActual = fmod(frecuencia * i / ANCHO_GRAFICA, 1.0); //   Residuo decimal para numeros double o float
             double valor = posicionActual < 0.5 ? (4 * posicionActual - 1) : (-4 * posicionActual + 3);
             int pos = (int)(valor * (ALTO_GRAFICA / 2));
             if (pos == j)
@@ -155,7 +154,7 @@ void graficarOndaSierra(double frecuencia) {
 
     // Detecta las posiciones de discontinuidad o saltos
     int discontinuidad[ANCHO_GRAFICA] = {0};
-    double posicionInicial = fmod(frecuencia * 0.0 / ANCHO_GRAFICA, 1.0); // fmod
+    double posicionInicial = fmod(frecuencia * 0.0 / ANCHO_GRAFICA, 1.0);
     for (int i = 1; i < ANCHO_GRAFICA; i++) {
         double posicionActual = fmod(frecuencia * i / ANCHO_GRAFICA, 1.0);
         if (posicionActual < posicionInicial) {
