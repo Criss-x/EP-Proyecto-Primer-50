@@ -678,7 +678,7 @@ void ManejoDeOpciones1(){
     
 }
 //---------------------------------------------------------------------------------------------------------------
-//Funcion o metodo ManejoDeOpciones2 que nos permite navegar por un menu de opciones.
+// Funcion o metodo ManejoDeOpciones2 que nos permite navegar por un menu de opciones.
 void ManejoDeOpciones2(){
     int opc=0;
     float frecuencia;
